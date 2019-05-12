@@ -13,6 +13,7 @@ def make_edge(start, end, cost=1):
 
 
 class Graph:
+    # graph.pickle is the saved graph, if it doesn't exist new one is created from the geojson files.
     def __init__(self, edges=[]):
         try:
             with open ('graph.pickle', 'rb') as fp:
