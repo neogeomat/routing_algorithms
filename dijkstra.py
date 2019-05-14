@@ -7,6 +7,7 @@ import pickle
 inf = float('inf')
 Edge = namedtuple('Edge', 'start, end, cost')
 
+print("Program Started" + str(time.time()))
 
 def make_edge(start, end, cost=1):
     return Edge(start, end, cost)
@@ -143,9 +144,9 @@ graph = Graph()
 t3 = time.time()
 # print("time to create graph",t3-t2)
 # find a route
-print(graph.dijkstra("5907", "460"))
+print(graph.dijkstra("1101", "1098"))
 t4 = time.time()
-print("time to finf route",t4-t3)
+print("time to find route",t4-t3)
 
 # TODO find the respective coordinates (nodes, edges? what should be the
 # return format?
