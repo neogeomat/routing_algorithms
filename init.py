@@ -34,8 +34,10 @@ for edge in edges:
 graph = Graph(temp)
 
 # define origin and destination points
-start_point = [51.968069, 7.622946]  # rewe
-end_point = [51.972735, 7.628477]  # brewery
+# start_point = [51.968069, 7.622946]  # rewe
+start_point = [51.972735, 7.628477]  # brewery
+# end_point = [51.971236, 7.613781]  # theater
+end_point = [51.968125, 7.637044]  # garden
 
 # look for the nodes that are on the street segment, the point is on
 # (just the closest node might not be on the same street)
@@ -102,13 +104,11 @@ for j, route in enumerate(routes):
                     route_edges.append(edge)
     routes_edges.append(route_edges)
     route_dist = sum_route_length(route_edges)
-    print(route_dist)
     route_dist += haversine(
         start_point, (node_combinations[j][0]["geometry"]["coordinates"][1], node_combinations[j][0]["geometry"]["coordinates"][0]))*1000
     route_dist += haversine(
         end_point, (node_combinations[j][1]["geometry"]["coordinates"][1], node_combinations[j][1]["geometry"]["coordinates"][0]))*1000
     print(route_dist)
-    print(node_combinations[j][1]["geometry"]["coordinates"])
     if (route_dist < minimal["route_dist"]):
         minimal["route"] = route_edges
         minimal["route_dist"] = route_dist
@@ -119,7 +119,7 @@ minimal["route"].append({"type": "Feature", "properties": {"name": "origin"}, "g
 
 minimal["route"].append({"type": "Feature", "properties": {"name": "destination"}, "geometry": {"type": "MultiLineString", "coordinates": [[[end_point[1], end_point[0]], node_combinations[chosen_route_id][1]["geometry"]["coordinates"]]]}})
 
-with open('shortest_path.geojson', 'w') as file:
+with open('brewery_garden.geojson', 'w') as file:
     json.dump({'type': "FeatureCollection", "features": minimal["route"]}, file)
 
 # TODO better structure
