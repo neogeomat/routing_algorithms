@@ -1,6 +1,6 @@
 import json
 from dijkstra import Graph
-from calculations import is_between, find_node_objects, sum_route_length
+from calculations import is_between, find_node_objects, sum_route_length, haversine
 
 # save the edges and the nodes
 with open("selected_edges_wgs84.geojson", "r") as read_file:
@@ -103,6 +103,12 @@ for j, route in enumerate(routes):
     routes_edges.append(route_edges)
     route_dist = sum_route_length(route_edges)
     print(route_dist)
+    route_dist += haversine(
+        start_point, (node_combinations[j][0]["geometry"]["coordinates"][1], node_combinations[j][0]["geometry"]["coordinates"][0]))*1000
+    route_dist += haversine(
+        end_point, (node_combinations[j][1]["geometry"]["coordinates"][1], node_combinations[j][1]["geometry"]["coordinates"][0]))*1000
+    print(route_dist)
+    print(node_combinations[j][1]["geometry"]["coordinates"])
     if (route_dist < minimal["route_dist"]):
         minimal["route"] = route_edges
         minimal["route_dist"] = route_dist
