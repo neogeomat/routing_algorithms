@@ -123,4 +123,3 @@ with open('brewery_garden.geojson', 'w') as file:
     json.dump({'type': "FeatureCollection", "features": minimal["route"]}, file)
 
 # TODO better structure
-# TODO save the graph not to create it every time?
