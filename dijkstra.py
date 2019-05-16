@@ -16,13 +16,13 @@ def make_edge(start, end, cost=1):
 class Graph:
     # graph.pickle is the saved graph, if it doesn't exist new one is created from the geojson files.
     def __init__(self, edges=[]):
-        try:
-            with open ('graph.pickle', 'rb') as fp:
-                edges = pickle.load(fp)
+        # try:
+            # with open('graph.pickle', 'rb') as fp:
+                # edges = pickle.load(fp)
             # edges = open('graph.pickle', 'r')
             # Store configuration file values
-        except IOError:
-            edges = self.createGraphFromGeojson()
+        # except IOError:
+        edges = self.createGraphFromGeojson()
         # let's check that the data is right
         wrong_edges = [i for i in edges if len(i) not in [2, 3]]
         if wrong_edges:
@@ -102,7 +102,7 @@ class Graph:
             path.appendleft(current_vertex)
         return {"path":path,"removedvertices":removedvertices}
 
-    def createGraphFromGeojson(self,node_file = "selected_nodes.geojson",edge_file = "selected_edges.geojson"):
+    def createGraphFromGeojson(self, node_file="selected_nodes.geojson", edge_file="selected_edges.geojson"):
         t1 = time.time()
         with open("selected_edges.geojson", "r") as read_file:
             edges_json = json.load(read_file)
@@ -131,7 +131,7 @@ class Graph:
                 g.append((str(start), str(end), edge["properties"]["length"]))
                 g.append((str(end), str(start), edge["properties"]["length"]))
         t2 = time.time()
-        print("time to load data",t2-t1)
+        print("time to load data", t2-t1)
         with open('graph.pickle', 'wb') as fp:
             pickle.dump(g, fp)
         with open('graph.json', 'w') as outfile:  
@@ -153,6 +153,9 @@ t3 = time.time()
 print(graph.dijkstra("1101", "1098"))
 t4 = time.time()
 print("time to find route",t4-t3)
+# print(graph.dijkstra("5907", "460"))
+# t4 = time.time()
+# print("time to finf route", t4-t3)
 
 # TODO find the respective coordinates (nodes, edges? what should be the
 # return format?
