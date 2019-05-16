@@ -7,7 +7,7 @@ import pickle
 inf = float('inf')
 Edge = namedtuple('Edge', 'start, end, cost')
 
-print("Program Started" + str(time.time()))
+print("Program Started at " + str(time.time()))
 
 def make_edge(start, end, cost=1):
     return Edge(start, end, cost)
@@ -78,18 +78,21 @@ class Graph:
         }
         distances[source] = 0
         vertices = self.vertices.copy()
+        removedvertices = []
 
         while vertices:
             current_vertex = min(
-                vertices, key=lambda vertex: distances[vertex])
-            vertices.remove(current_vertex)
-            if distances[current_vertex] == inf:
-                break
+                vertices, key=lambda vertex: distances[vertex])         
+            
             for neighbour, cost in self.neighbours[current_vertex]:
                 alternative_route = distances[current_vertex] + cost
                 if alternative_route < distances[neighbour]:
                     distances[neighbour] = alternative_route
                     previous_vertices[neighbour] = current_vertex
+            if distances[current_vertex] == inf or current_vertex == dest:
+                break
+            vertices.remove(current_vertex)
+            removedvertices.append(current_vertex)
 
         path, current_vertex = deque(), dest
         while previous_vertices[current_vertex] is not None:
@@ -97,7 +100,7 @@ class Graph:
             current_vertex = previous_vertices[current_vertex]
         if path:
             path.appendleft(current_vertex)
-        return path
+        return {"path":path,"removedvertices":removedvertices}
 
     def createGraphFromGeojson(self,node_file = "selected_nodes.geojson",edge_file = "selected_edges.geojson"):
         t1 = time.time()
@@ -108,8 +111,9 @@ class Graph:
         with open("selected_nodes.geojson", "r") as read_file:
             nodes_json = json.load(read_file)
             nodes = nodes_json["features"]
-
+        
         g = []
+        objectForWrite = {"data":g} # json.dump requires dict
         for edge in edges:
             start, end = None, None
             for node in nodes:
@@ -130,6 +134,8 @@ class Graph:
         print("time to load data",t2-t1)
         with open('graph.pickle', 'wb') as fp:
             pickle.dump(g, fp)
+        with open('graph.json', 'w') as outfile:  
+            json.dump(objectForWrite, outfile)
         return g
         # create the network
 
