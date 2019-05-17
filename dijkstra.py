@@ -10,7 +10,7 @@ Edge = namedtuple('Edge', 'start, end, cost')
 config = {}
 config['graph_file'] = 'graph.json'
 config['nodes_file'] = 'selected_nodes.geojson'
-config['edges_file'] = 'selectrd_edges.geojson'
+config['edges_file'] = 'selected_edges.geojson'
 
 print("Program Started at " + str(time.time()))
 
@@ -19,11 +19,11 @@ def make_edge(start, end, cost=1):
 
 def createGraphFromGeojson(node_file=config['nodes_file'], edge_file=config['edges_file']):
         t1 = time.time()
-        with open("selected_edges.geojson", "r") as read_file:
+        with open(config['edges_file'], "r") as read_file:
             edges_json = json.load(read_file)
             edges = edges_json["features"]
 
-        with open("selected_nodes.geojson", "r") as read_file:
+        with open(config['nodes_file'], "r") as read_file:
             nodes_json = json.load(read_file)
             nodes = nodes_json["features"]
         
@@ -60,6 +60,7 @@ class Graph:
             raise ValueError('Wrong edges data: {}'.format(wrong_edges))
 
         self.edges = [make_edge(*edge) for edge in edges]
+        self.result = {}
 
     @property
     def vertices(self):
@@ -131,7 +132,20 @@ class Graph:
             current_vertex = previous_vertices[current_vertex]
         if path:
             path.appendleft(current_vertex)
-        return {"path":path,"removedvertices":removedvertices}
+        self.result["path"] = path
+        self.result["removedvertices"] = removedvertices
+        return self
+
+    def get_geom_from_path(self):
+        with open(config['nodes_file'], "r") as read_file:
+            nodes_json = json.load(read_file)
+            nodes = nodes_json["features"]
+        self.result['geom_path'] = []
+        for node in nodes:
+            for vertex in self.result["path"]:
+                if(node["properties"]["nodeID"] == int(vertex)):
+                    self.result['geom_path'].append([node["geometry"]["coordinates"]])
+        return self
 
 try:
     with open(config['graph_file'],'r') as fp:
@@ -150,9 +164,11 @@ graph = Graph(edges)
 t3 = time.time()
 # print("time to create graph",t3-t2)
 # find a route
-print(graph.dijkstra("1101", "1098"))
+print(graph.dijkstra("1101", "1098").result)
 t4 = time.time()
 print("time to find route",t4-t3)
+graph.get_geom_from_path()
+print(graph.result['geom_path'])
 # print(graph.dijkstra("5907", "460"))
 # t4 = time.time()
 # print("time to finf route", t4-t3)
