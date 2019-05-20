@@ -93,7 +93,8 @@ routes_nodes = []
 routes_edges = []
 minimal = {"route": [], "route_dist": 9999999}
 
-for j, route in enumerate(routes):
+for j, route_obj in enumerate(routes):
+    route = route_obj.result["path"]
     route_nodes = find_node_objects(route, nodes)
     routes_nodes.append(route_nodes)
     route_edges = []
