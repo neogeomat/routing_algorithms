@@ -25,10 +25,17 @@ else:
     raise
 
 
-print(graph.dijkstra("1101", "1098").result)
+print(graph.dijkstra("5099", "375").result['removedvertices'])
 t4 = time.time()
 graph.get_geom_from_path()
-print(graph.result['geom_path'])
+# print(graph.result['geom_path'])
 with open('simple_djikstra.geojson','w') as f:
+    f.write(graph.to_geojson())
+    f.close()
+
+print(graph.dijkstra_landmark("5099", "375").result['removedvertices'])
+graph.get_geom_from_path()
+# print(graph.result['geom_path'])
+with open('simple_djikstra_landmark.geojson','w') as f:
     f.write(graph.to_geojson())
     f.close()

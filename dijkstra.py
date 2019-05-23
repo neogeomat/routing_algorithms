@@ -57,6 +57,7 @@ class Graph:
         self.edges = edges = [Edge(*edge) for edge in edges]
         self.vertices = {e.start for e in edges} | {e.end for e in edges}
         self.landmarks = landmarks
+        self.landmarks_nodeids = [l['properties']['nodeID'] for l in landmarks]
         self.config = config
         self.result = {}
 
@@ -129,14 +130,19 @@ class Graph:
         }
         distances[source] = 0
         vertices = self.vertices.copy()
+        neighbours = {vertex: set() for vertex in self.vertices}
         removedvertices = []
 
+        for start, end, cost in self.edges:
+            neighbours[start].add((end, cost))
         while vertices:
             current_vertex = min(
                 vertices, key=lambda vertex: distances[vertex])         
             
-            for neighbour, cost in self.neighbours[current_vertex]:
-                # do sth for land marks here
+            for neighbour, cost in neighbours[current_vertex]:
+                if int(current_vertex) in self.landmarks_nodeids:
+                    cost -= 50
+                    print cost
                 alternative_route = distances[current_vertex] + cost
                 if alternative_route < distances[neighbour]:
                     distances[neighbour] = alternative_route
