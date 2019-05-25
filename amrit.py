@@ -53,3 +53,5 @@ def route_it(startnodeid,endnodeid,route_name):
 route_it("5276","94","theatre_rewe")
 route_it("94","249","rewe_brewery")
 route_it("249","4692","brewery_garden")
+
+print("Finished check in qgis")
