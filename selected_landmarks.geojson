@@ -27,6 +27,9 @@
 { "type": "Feature", "properties": { "nodeID": 3455, "x": 405426.70577674243, "y": 5758830.5625472283, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405426.705776742426679, 5758830.562547228299081 ] ] } },
 { "type": "Feature", "properties": { "nodeID": 4979, "x": 405236.19704462995, "y": 5758594.2968762955, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405236.19704462995287, 5758594.296876295469701 ] ] } },
 { "type": "Feature", "properties": { "nodeID": 87, "x": 405177.67937942909, "y": 5758424.9207011145, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405177.679379429086111, 5758424.920701114460826 ] ] } },
-{ "type": "Feature", "properties": { "nodeID": 361, "x": 405059.40033107222, "y": 5758939.0720121171, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405059.40033107221825, 5758939.072012117132545 ] ] } }
+{ "type": "Feature", "properties": { "nodeID": 361, "x": 405059.40033107222, "y": 5758939.0720121171, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405059.40033107221825, 5758939.072012117132545 ] ] } },
+{ "type": "Feature", "properties": { "nodeID": 230, "x": 405058.24564861454, "y": 5758495.7773758508, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405058.245648614538368, 5758495.777375850826502 ] ] } },
+{ "type": "Feature", "properties": { "nodeID": 236, "x": 405475.35855606396, "y": 5758579.4639064893, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 405475.358556063962169, 5758579.463906489312649 ] ] } },
+{ "type": "Feature", "properties": { "nodeID": 974, "x": 404919.36704604572, "y": 5758652.1391971651, "height": 2 }, "geometry": { "type": "MultiPoint", "coordinates": [ [ 404919.367046045721509, 5758652.13919716514647 ] ] } }
 ]
 }

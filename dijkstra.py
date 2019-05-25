@@ -140,7 +140,9 @@ class Graph:
             
             for neighbour, cost in neighbours[current_vertex]:
                 if int(current_vertex) in self.landmarks:
-                    cost -= self.landmarks[int(current_vertex)]
+                    # cost -= cost                                  # no cost to move to a landmark favored node, best results till now, not useful if lots of small edges 
+                    # cost -= self.landmarks[int(current_vertex)]   # highly biased towards landwarks, sometimes doesn't give result when discount setting is high
+                    cost /= 0.5 * cost
                     # print cost
                 alternative_route = distances[current_vertex] + cost
                 if alternative_route < distances[neighbour]:
