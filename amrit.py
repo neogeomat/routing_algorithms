@@ -17,10 +17,13 @@ try:
     with open(config['landmarks_file'],'r') as fp:
         landmarks_json = json.load(fp)
         landmarks = landmarks_json["features"]
+        landmarks_discount = {}
+        for l in landmarks:
+            landmarks_discount[l['properties']['nodeID']] = 20
 except:
     landmarks = {}
 if(edges):
-    graph = Graph(edges,landmarks,config)
+    graph = Graph(edges,landmarks_discount,config)
 else:
     raise
 
@@ -42,11 +45,11 @@ with open('simple_djikstra_landmark.geojson','w') as f:
 
 def route_it(startnodeid,endnodeid,route_name):
     with open('computed_routes/'+route_name+'_simple_djikstra.geojson','w') as f:
-        graph.dijkstra(startnodeid,endnodeid)
+        print(graph.dijkstra(startnodeid,endnodeid).result['path'])
         f.write(graph.get_geom_from_path().to_geojson())
         f.close()
     with open('computed_routes/'+route_name+'_landmark_djikstra.geojson','w') as f:
-        graph.dijkstra_landmark(startnodeid,endnodeid)
+        print(graph.dijkstra_landmark(startnodeid,endnodeid).result['path'])
         f.write(graph.get_geom_from_path().to_geojson())
         f.close()
 
