@@ -141,8 +141,8 @@ class Graph:
             
             for neighbour, cost in neighbours[current_vertex]:
                 if int(current_vertex) in self.landmarks_nodeids:
-                    cost -= 50
-                    print cost
+                    cost -= 20
+                    # print cost
                 alternative_route = distances[current_vertex] + cost
                 if alternative_route < distances[neighbour]:
                     distances[neighbour] = alternative_route
